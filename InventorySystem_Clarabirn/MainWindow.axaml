@@ -1,0 +1,55 @@
+<!-- MainWindow.axaml -->
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        x:Class="InventoryApp.MainWindow"
+        Width="900" Height="600" Title="Inventory System">
+  <Grid RowDefinitions="Auto,*,Auto" ColumnDefinitions="*,*">
+    <TextBlock Grid.ColumnSpan="2" Margin="12" FontSize="20" Text="Inventory System (Week 6 - Activity 40)"/>
+
+    <!-- Queued Orders -->
+    <StackPanel Grid.Row="1" Grid.Column="0" Margin="12">
+      <TextBlock FontSize="16" Text="Queued Orders" Margin="0,0,0,8"/>
+      <DataGrid Items="{Binding OrderBook.QueuedOrders}" AutoGenerateColumns="False" Height="220">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
+          <DataGridTextColumn Header="Lines" Binding="{Binding Lines}"/>
+          <DataGridTextColumn Header="Total" Binding="{Binding Path=TotalPrice(), Mode=OneWay, StringFormat=C}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <Button Content="Process Next Order"
+              Margin="0,8,0,0"
+              Command="{Binding ProcessNextOrderCommand}"/>
+    </StackPanel>
+
+    <!-- Processed Orders -->
+    <StackPanel Grid.Row="1" Grid.Column="1" Margin="12">
+      <TextBlock FontSize="16" Text="Processed Orders" Margin="0,0,0,8"/>
+      <DataGrid Items="{Binding OrderBook.ProcessedOrders}" AutoGenerateColumns="False" Height="220">
+        <DataGrid.Columns>
+          <DataGridTextColumn Header="Time" Binding="{Binding Time}"/>
+          <DataGridTextColumn Header="Lines" Binding="{Binding Lines}"/>
+          <DataGridTextColumn Header="Total" Binding="{Binding Path=TotalPrice(), Mode=OneWay, StringFormat=C}"/>
+        </DataGrid.Columns>
+      </DataGrid>
+
+      <TextBlock Margin="0,12,0,0" FontSize="16">
+        <Run Text="Total Revenue: "/>
+        <Run Text="{Binding TotalRevenue, StringFormat=C}"/>
+      </TextBlock>
+    </StackPanel>
+
+    <!-- (Valgfrit) Lav-lager liste -->
+    <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="12">
+      <TextBlock Text="Low stock (&lt;5): " VerticalAlignment="Center"/>
+      <ItemsControl Margin="8,0,0,0">
+        <ItemsControl.Items>
+          <!-- Bind ved behov via en ValueConverter; her er blot placeholder -->
+        </ItemsControl.Items>
+      </ItemsControl>
+    </StackPanel>
+  </Grid>
+</Window>
